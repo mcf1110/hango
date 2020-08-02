@@ -1,36 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { PeopleService, Person } from 'src/app/services/people.service';
 
 @Component({
   selector: 'app-people',
   templateUrl: 'people.page.html',
   styleUrls: ['people.page.scss'],
 })
-export class PeoplePage implements OnInit {
+export class PeoplePage {
 
   public newPerson = {
     name: ''
   };
-  public people = [];
-  constructor(private alertController: AlertController) { }
-  ngOnInit(): void {
-    // this.people = People.all();
-    console.log('ola');
-  }
-  addPerson() {
-    // if (!this.newPerson.name) {
-    //   return;
-    // }
-    // var p = People.add(this.newPerson.name);
-    // if (p == false) {
-    //   $ionicPopup.alert({
-    //     title: 'Já existe alguém com esse nome!'
-    //     , template: 'Considere colocar o sobrenome também.'
-    //   });
-    // }
-    // else {
-    //   this.people = p;
-    //   this.newPerson.name = '';
+  public people = this.peopleService.all$;
+  constructor(private alertController: AlertController, private peopleService: PeopleService) { }
+
+  async addPerson() {
+    if (!this.newPerson.name) {
+      return;
+    }
+    const p = await this.peopleService.add(this.newPerson.name);
+    if (p === false) {
+      const a = await this.alertController.create({
+        header: 'Já existe alguém com esse nome!',
+        message: 'Considere colocar o sobrenome também.',
+        buttons: ['OK']
+      });
+      a.present()
+    }
+    else {
+      this.newPerson.name = '';
+    }
   }
   editPerson(id, name) {
     console.log(name);
