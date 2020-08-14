@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ActionSheetController } from '@ionic/angular';
 import { PeopleService, Person } from 'src/app/services/people.service';
 
 @Component({
@@ -13,7 +13,12 @@ export class PeoplePage {
     name: ''
   };
   public people = this.peopleService.all$;
-  constructor(private alertController: AlertController, private peopleService: PeopleService) { }
+  constructor
+    (
+      private alertController: AlertController,
+      private peopleService: PeopleService,
+      private actionSheetController: ActionSheetController,
+  ) { }
 
   async addPerson() {
     if (!this.newPerson.name) {
@@ -26,57 +31,67 @@ export class PeoplePage {
         message: 'Considere colocar o sobrenome também.',
         buttons: ['OK']
       });
-      a.present()
+      a.present();
     }
     else {
       this.newPerson.name = '';
     }
   }
-  editPerson(id, name) {
-    console.log(name);
-    // $ionicPopup.prompt({
-    //   title: 'Mudar nome de ' + name
-    //   , template: 'Por favor, entre com o novo nome'
-    //   , inputType: 'text'
-    //   , inputPlaceholder: 'Novo nome'
-    //   , defaultText: name
-    // }).then(function (newName) {
-    //   if (newName) {
-    //     this.people = People.update(id, newName);
-    //   }
-    // });
+  async editPerson(person: Person) {
+    const alert = await this.alertController.create({
+      header: 'Mudar nome de ' + person.name,
+      buttons: ['OK'],
+      inputs: [
+        {
+          name: 'name',
+          label: 'Novo nome',
+          placeholder: 'Novo nome',
+          value: person.name
+        }
+      ]
+    });
+
+    await alert.present();
+    const { data } = await alert.onDidDismiss();
+    this.peopleService.update(person.id, data.values.name)
   }
-  removePerson(id) {
-    // var p = People.remove(id);
-    // if (p) {
-    //   this.people = p;
-    // }
-    // else {
-    //   $ionicPopup.alert({
-    //     title: 'Ops!'
-    //     , template: 'Parece que essa pessoa já tem pelo menos um item!'
-    //   });
-    // }
+  async removePerson(id: number) {
+    const p = this.peopleService.remove(id);
+    if (!p) {
+      const alert = await this.alertController.create({
+        header: 'Ops!',
+        message: 'Parece que essa pessoa já tem pelo menos um item!',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+    }
   }
-  showSheet(id, name) {
-    // var hideSheet = $ionicActionSheet.show({
-    //   buttons: [
-    //     {
-    //       text: 'Editar'
-    //     }
-    //   ]
-    //   , destructiveText: 'Remover'
-    //   , titleText: 'Opções'
-    //   , cancelText: 'Cancelar'
-    //   , buttonClicked: function () {
-    //     this.editPerson(id, name);
-    //     return true;
-    //   }
-    //   , destructiveButtonClicked: function () {
-    //     this.removePerson(id);
-    //     return true;
-    //   }
-    // });
+  async showSheet(person: Person) {
+    console.log(person);
+    const actionSheet = await this.actionSheetController.create({
+      header: person.name,
+      buttons: [{
+        text: 'Remover',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.removePerson(person.id);
+        }
+      }, {
+        text: 'Editar',
+        icon: 'create',
+        handler: () => {
+          this.editPerson(person);
+        }
+      }, {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+
+    await actionSheet.present();
   }
 
 }

@@ -19,49 +19,56 @@ export class PeopleService {
   private innerAll$ = new BehaviorSubject<Person[]>([]);
   public all$ = this.innerAll$.asObservable();
 
-  save(p: Person[]) {
+  private all() {
+    return this.innerAll$.getValue();
+  }
+
+  commit(p: Person[]) {
     this.innerAll$.next(p);
     this.storage.set('People', p);
   }
+
   findByName(name: string) {
-    const people = this.innerAll$.getValue();
+    const people = this.all();
     return people.find(p => p.name === name);
   }
+
   async add(name: string) {
     if (this.findByName(name)) {
       return false;
     }
-    const people = this.innerAll$.getValue();
+    const people = this.all();
     const person = {
       id: people.length > 0 ? people[people.length - 1].id + 1 : 1,
       name
     };
     const newPeople = [person, ...people]
-    this.save(newPeople);
-    return people;
+    this.commit(newPeople);
+    return true;
   }
+
   getIndex(id) {
     // return this.all().binarySearch(id);
   }
+
   get(id) {
     // var index = this.getIndex(id);
     // return index >= 0 ? this.all()[index] : {};
   }
-  update(id, newName) {
-    // var people = this.all();
-    // var index = this.getIndex(id);
-    // people[index].name = newName;
-    // this.save(people);
-    // return people;
+
+  update(id: number, name: string) {
+    const people = this.all();
+    const newPeople = people.filter(p => p.id !== id);
+    this.commit([...newPeople, { id, name }]);
+    return true;
   }
-  remove(id) {
-    // var people = this.all();
+
+  remove(id: number) {
     // if (Items.findPerson(id)) {
     //   return false;
     // }
-    // var index = this.getIndex(id);
-    // people.splice(index, 1);
-    // this.save(people);
-    // return people;
+    const people = this.all();
+    this.commit(people.filter(p => p.id !== id));
+    return true;
   }
 }

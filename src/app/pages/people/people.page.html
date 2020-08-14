@@ -15,7 +15,7 @@
       </ion-buttons>
     </ion-toolbar>
     <ion-list>
-      <ion-item *ngFor="let person of people | async">
+      <ion-item *ngFor="let person of people | async" (click)="showSheet(person)" button>
         {{person.name}} </ion-item>
     </ion-list>
   </ion-grid>
