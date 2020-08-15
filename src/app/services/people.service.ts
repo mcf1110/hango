@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Person {
   name: string;
@@ -18,6 +19,9 @@ export class PeopleService {
 
   private innerAll$ = new BehaviorSubject<Person[]>([]);
   public all$ = this.innerAll$.asObservable();
+  public allAlphatically$ = this.all$.pipe(
+    map(ps => ps.sort((a, b) => a.name.localeCompare(b.name)))
+  );
 
   private all() {
     return this.innerAll$.getValue();
@@ -39,7 +43,7 @@ export class PeopleService {
     }
     const people = this.all();
     const person = {
-      id: people.length > 0 ? people[people.length - 1].id + 1 : 1,
+      id: people.length > 0 ? Math.max(...people.map(p => p.id)) + 1 : 1,
       name
     };
     const newPeople = [person, ...people]

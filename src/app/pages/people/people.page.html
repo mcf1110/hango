@@ -1,19 +1,19 @@
 <ion-header>
   <ion-toolbar color="secondary">
-    <ion-title>Header</ion-title>
+    <ion-title>Pessoas</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-input type="text" placeholder="Nome" [(ngModel)]="newPerson.name"></ion-input>
+    <ion-buttons slot="end">
+      <ion-button (click)="addPerson()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   <ion-grid fixed>
-    <ion-toolbar color="light">
-      <ion-input type="text" placeholder="Nome" [(ngModel)]="newPerson.name"></ion-input>
-      <ion-buttons slot="end">
-        <ion-button (click)="addPerson()">
-          <ion-icon slot="icon-only" name="add"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
     <ion-list>
       <ion-item *ngFor="let person of people | async" (click)="showSheet(person)" button>
         {{person.name}} </ion-item>

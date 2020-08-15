@@ -12,12 +12,11 @@ export class PeoplePage {
   public newPerson = {
     name: ''
   };
-  public people = this.peopleService.all$;
-  constructor
-    (
-      private alertController: AlertController,
-      private peopleService: PeopleService,
-      private actionSheetController: ActionSheetController,
+  public people = this.peopleService.allAlphatically$;
+  constructor(
+    private alertController: AlertController,
+    private peopleService: PeopleService,
+    private actionSheetController: ActionSheetController,
   ) { }
 
   async addPerson() {
@@ -68,7 +67,6 @@ export class PeoplePage {
     }
   }
   async showSheet(person: Person) {
-    console.log(person);
     const actionSheet = await this.actionSheetController.create({
       header: person.name,
       buttons: [{
