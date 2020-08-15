@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomePage } from './pages/home/home.page';
 import { PeoplePage } from './pages/people/people.page';
 import { ItemsPage } from './pages/items/items.page';
+import { AddItemPage } from './pages/add-item/add-item.page';
 
 const routes: Routes = [
   {
@@ -10,7 +11,16 @@ const routes: Routes = [
     component: HomePage,
     children: [
       { path: 'people', component: PeoplePage },
-      { path: 'items', component: ItemsPage },
+      {
+        path: 'items',
+        children: [
+          { path: 'add', component: AddItemPage },
+          {
+            path: '', component: ItemsPage,
+            pathMatch: 'full',
+          },
+        ]
+      },
       {
         path: '',
         redirectTo: 'people',
