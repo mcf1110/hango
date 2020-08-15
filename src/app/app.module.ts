@@ -12,9 +12,10 @@ import { HomePage } from './pages/home/home.page';
 import { PeoplePage } from './pages/people/people.page';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
+import { ItemsPage } from './pages/items/items.page';
 
 @NgModule({
-  declarations: [AppComponent, HomePage, PeoplePage],
+  declarations: [AppComponent, HomePage, PeoplePage, ItemsPage],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule,
     IonicStorageModule.forRoot()],

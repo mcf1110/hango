@@ -1,0 +1,74 @@
+import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+export interface Item {
+  id: number;
+  name: string;
+  price: number;
+  items: number[];
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ItemsService {
+
+  constructor(private storage: Storage) {
+    this.storage.get('Items').then(x => x ?? []).then(p => this.innerAll$.next(p));
+  }
+
+  private innerAll$ = new BehaviorSubject<Item[]>([]);
+  public all$ = this.innerAll$.asObservable();
+  public allAlphatically$ = this.all$.pipe(
+    map(ps => ps.sort((a, b) => a.name.localeCompare(b.name)))
+  );
+
+  private all() {
+    return this.innerAll$.getValue();
+  }
+
+  commit(p: Item[]) {
+    this.innerAll$.next(p);
+    this.storage.set('Items', p);
+  }
+
+  findByName(name: string) {
+    const items = this.all();
+    return items.find(p => p.name === name);
+  }
+
+  async add(data: Omit<Item, 'id'>) {
+    const items = this.all();
+    const item = {
+      id: items.length > 0 ? Math.max(...items.map(p => p.id)) + 1 : 1,
+      ...data
+    };
+    const newItems = [item, ...items];
+    this.commit(newItems);
+    return true;
+  }
+
+  getIndex(id) {
+    // return this.all().binarySearch(id);
+  }
+
+  get(id) {
+    // var index = this.getIndex(id);
+    // return index >= 0 ? this.all()[index] : {};
+  }
+
+  update(id: number, data: Omit<Item, 'id'>) {
+    const items = this.all();
+    const newItems = items.filter(p => p.id !== id);
+    this.commit([...newItems, { id, ...data }]);
+    return true;
+  }
+
+  remove(id: number) {
+    const items = this.all();
+    this.commit(items.filter(p => p.id !== id));
+    return true;
+  }
+}

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Itens</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-grid fixed>
+    <ion-list>
+      <ion-item button (click)="showSheet(item.id)" *ngFor="let item of items"> {{item.name}}
+
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>
