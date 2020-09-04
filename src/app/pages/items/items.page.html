@@ -12,7 +12,7 @@
   </ion-fab>
   <ion-grid fixed>
     <ion-list>
-      <ion-item button (click)="showSheet(item.id)" *ngFor="let item of items"> {{item.name}}
+      <ion-item button (click)="showSheet(item.id)" *ngFor="let item of items$ | async"> {{item.name}}
 
       </ion-item>
     </ion-list>
