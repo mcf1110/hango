@@ -23,10 +23,8 @@ export class ItemsPage {
     this.router.navigate(['/home/items/edit', i.id]);
   }
 
-  public duplicateItem(i) {
-    // $state.go('tab.add-item/{id:int}', {
-    //   id: i
-    // });
+  public duplicateItem(i: Item) {
+    this.itemsService.add(i);
   }
   public removeItem(id: number) {
     this.itemsService.remove(id)

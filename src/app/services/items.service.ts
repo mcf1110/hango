@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Item {
@@ -54,9 +54,12 @@ export class ItemsService {
     // return this.all().binarySearch(id);
   }
 
-  find(id: number) {
+  find(id: number): Observable<Item | null> {
     return this.innerAll$.pipe(
-      map(all => ({ ...all.find(i => i.id === id) }))
+      map(all => {
+        const item = all.find(i => i.id === id);
+        return item ? ({ ...item }) : null;
+      })
     );
   }
 
