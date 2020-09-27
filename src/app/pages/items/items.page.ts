@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActionSheetController } from '@ionic/angular';
 import { ItemsService, Item } from 'src/app/services/items.service';
 
 @Component({
@@ -7,19 +9,20 @@ import { ItemsService, Item } from 'src/app/services/items.service';
   styleUrls: ['items.page.scss'],
 })
 export class ItemsPage {
-  constructor(private itemsService: ItemsService) {
+  constructor(
+    private itemsService: ItemsService,
+    private actionSheetController: ActionSheetController,
+    private router: Router
+  ) {
 
   }
 
   public items$ = this.itemsService.allAlphatically$;
-  public addItem() {
-    // $state.go('tab.add-item')
+
+  public editItem(i: Item) {
+    this.router.navigate(['/home/items/edit', i.id]);
   }
-  public editItem(i) {
-    // $state.go('tab.edit-item/{id:int}', {
-    //   id: i
-    // });
-  }
+
   public duplicateItem(i) {
     // $state.go('tab.add-item/{id:int}', {
     //   id: i
@@ -28,31 +31,35 @@ export class ItemsPage {
   public removeItem(id: number) {
     this.itemsService.remove(id)
   }
-  public showSheet(item: Item) {
-    //   var hideSheet = $ionicActionSheet.show({
-    //     buttons: [
-    //       {
-    //         text: 'Editar'
-    //       }, {
-    //         text: 'Duplicar'
-    //       }
-    //     ]
-    //     , destructiveText: 'Remover'
-    //     , titleText: 'Opções'
-    //     , cancelText: 'Cancelar'
-    //     , buttonClicked: function (index) {
-    //       if (index == 0) {
-    //                 public editItem(id);
-    //   }
-    //             if (index == 1) {
-    //                 public duplicateItem(id);
-    //   }
-    //   return true;
-    // }
-    //         , destructiveButtonClicked: function () {
-    //             public removeItem(id);
-    //   return true;
-    // }
-    // });
+  public async showSheet(item: Item) {
+    const actionSheet = await this.actionSheetController.create({
+      header: item.name,
+      buttons: [{
+        text: 'Remover',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.removeItem(item.id);
+        }
+      }, {
+        text: 'Editar',
+        icon: 'create',
+        handler: () => {
+          this.editItem(item);
+        }
+      }, {
+        text: 'Duplicar',
+        icon: 'duplicate',
+        handler: () => {
+          this.duplicateItem(item);
+        }
+      }, {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+
+    await actionSheet.present();
   }
 }

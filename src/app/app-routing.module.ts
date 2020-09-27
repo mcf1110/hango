@@ -4,6 +4,7 @@ import { HomePage } from './pages/home/home.page';
 import { PeoplePage } from './pages/people/people.page';
 import { ItemsPage } from './pages/items/items.page';
 import { AddItemPage } from './pages/add-item/add-item.page';
+import { EditItemPage } from './pages/edit-item/edit-item.page';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
         path: 'items',
         children: [
           { path: 'add', component: AddItemPage },
+          { path: 'edit/:id', component: EditItemPage },
           {
             path: '', component: ItemsPage,
             pathMatch: 'full',

@@ -54,15 +54,16 @@ export class ItemsService {
     // return this.all().binarySearch(id);
   }
 
-  get(id) {
-    // var index = this.getIndex(id);
-    // return index >= 0 ? this.all()[index] : {};
+  find(id: number) {
+    return this.innerAll$.pipe(
+      map(all => ({ ...all.find(i => i.id === id) }))
+    );
   }
 
   update(id: number, data: Omit<Item, 'id'>) {
     const items = this.all();
-    const newItems = items.filter(p => p.id !== id);
-    this.commit([...newItems, { id, ...data }]);
+    const unchanged = items.filter(p => p.id !== id);
+    this.commit([...unchanged, { ...data, id }]);
     return true;
   }
 

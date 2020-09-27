@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/items"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Adicionar item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ng-container *ngIf="currentItem$ | async as item">
+      <app-item-form [item]="item" (save)="handleSave($event)"></app-item-form>
+    </ng-container>
+  </ion-grid>
+</ion-content>

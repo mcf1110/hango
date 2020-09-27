@@ -13,6 +13,12 @@ export class ItemFormComponent {
   @Output() save = new EventEmitter<Item>();
   @Input() item: Item;
 
+  ngOnInit() {
+    if (this.item.people) {
+      this.selectedPeople = new Set(this.item.people);
+    }
+  }
+
   private search$ = new BehaviorSubject('');
   private debouncedSearch$ = this.search$.pipe(
     debounceTime(200),
