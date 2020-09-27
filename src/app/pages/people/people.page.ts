@@ -31,8 +31,7 @@ export class PeoplePage {
         buttons: ['OK']
       });
       a.present();
-    }
-    else {
+    } else {
       this.newPerson.name = '';
     }
   }

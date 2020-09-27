@@ -6,8 +6,8 @@ import { map } from 'rxjs/operators';
 export interface Item {
   id: number;
   name: string;
-  price: number;
-  items: number[];
+  value: number;
+  people: number[];
 }
 
 @Injectable({
@@ -42,8 +42,8 @@ export class ItemsService {
   async add(data: Omit<Item, 'id'>) {
     const items = this.all();
     const item = {
+      ...data,
       id: items.length > 0 ? Math.max(...items.map(p => p.id)) + 1 : 1,
-      ...data
     };
     const newItems = [item, ...items];
     this.commit(newItems);

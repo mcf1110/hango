@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { ItemsService } from 'src/app/services/items.service';
-import { PeopleService } from 'src/app/services/people.service';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { map, tap, debounceTime, first } from 'rxjs/operators';
+import { NavController } from '@ionic/angular';
+import { Item, ItemsService } from 'src/app/services/items.service';
 
 @Component({
   selector: 'app-add-item',
@@ -10,58 +8,17 @@ import { map, tap, debounceTime, first } from 'rxjs/operators';
   styleUrls: ['add-item.page.scss'],
 })
 export class AddItemPage {
-  private search$ = new BehaviorSubject('');
-  private debouncedSearch$ = this.search$.pipe(
-    debounceTime(200),
-    map(s => s.toLocaleLowerCase()),
-  );
-  public people$ = combineLatest([
-    this.debouncedSearch$,
-    this.peopleService.allAlphatically$
-  ]).pipe(
-    map(([s, ps]) => ps.filter(p => p.name.toLocaleLowerCase().includes(s)))
-  );
-  public isSearchEmpty$ = this.debouncedSearch$.pipe(
-    map(s => s.length === 0)
-  );
 
-  public selectedPeople: Set<number> = new Set();
-  public item = {
+  constructor(private itemsService: ItemsService, private navCtrl: NavController) { }
+
+  public initialItem = {
     name: '',
-    value: 0
+    value: 0,
+    id: 0
   }
 
-  constructor(
-    private itemService: ItemsService,
-    private peopleService: PeopleService
-  ) {
-
-  }
-
-  public searchChanged(search: string) {
-    this.search$.next(search);
-  }
-
-  public async checkAll(checked: boolean) {
-    if (!checked) {
-      return this.selectedPeople.clear();
-    }
-    const people = await this.peopleService.allAlphatically$.pipe(first()).toPromise();
-    people.forEach(p => this.selectedPeople.add(p.id));
-  }
-
-  public toggle(include: boolean, personId: number) {
-    if (include) {
-      return this.selectedPeople.add(personId);
-    }
-    this.selectedPeople.delete(personId);
-  }
-
-  public submit() {
-    const people = [...this.selectedPeople]
-    console.log({
-      ...this.item,
-      people
-    });
+  public handleSave(newItem: Item) {
+    this.itemsService.add(newItem);
+    this.navCtrl.back();
   }
 }

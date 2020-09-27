@@ -3,9 +3,13 @@
     <ion-title>Pessoas</ion-title>
   </ion-toolbar>
   <ion-toolbar color="light">
-    <ion-input type="text" placeholder="Nome" [(ngModel)]="newPerson.name"></ion-input>
+    <ion-input
+      type="text"
+      placeholder="Nome"
+      [(ngModel)]="newPerson.name"
+    ></ion-input>
     <ion-buttons slot="end">
-      <ion-button (click)="addPerson()">
+      <ion-button (click)="addPerson()" [disabled]="!newPerson.name">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,8 +19,13 @@
 <ion-content>
   <ion-grid fixed>
     <ion-list>
-      <ion-item *ngFor="let person of people | async" (click)="showSheet(person)" button>
-        {{person.name}} </ion-item>
+      <ion-item
+        *ngFor="let person of people | async"
+        (click)="showSheet(person)"
+        button
+      >
+        {{person.name}}
+      </ion-item>
     </ion-list>
   </ion-grid>
 </ion-content>

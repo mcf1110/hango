@@ -9,56 +9,9 @@
 
 <ion-content>
   <ion-grid fixed>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>
-          Informações do Item
-        </ion-card-title>
-      </ion-card-header>
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Nome do item</ion-label>
-          <ion-input [ngModel]="item.name" name="name" required></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Preço</ion-label>
-          <ion-input [ngModel]="item.value" name="name" type="number" required></ion-input>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Pessoas participantes</ion-card-title>
-      </ion-card-header>
-
-
-      <ion-item>
-        <ion-icon slot="start" name="search"></ion-icon>
-        <ion-input name="filter" placeholder="Filtrar" (ionChange)="searchChanged($event.detail.value)"></ion-input>
-      </ion-item>
-
-
-      <ion-list>
-        <ion-item color="light" *ngIf="isSearchEmpty$ | async">
-          <ion-checkbox slot="start" (ionChange)="checkAll($event.detail.checked)">
-          </ion-checkbox>
-          <ion-label>Todos</ion-label>
-        </ion-item>
-
-        <ion-item *ngFor="let person of people$ | async">
-          <ion-checkbox slot="start" [checked]="selectedPeople.has(person.id)"
-            (ionChange)="toggle($event.detail.checked, person.id)">
-          </ion-checkbox>
-          <ion-label>{{person.name}}</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-
-
-    <ion-button (click)="submit()" class="ion-margin-horizontal" expand="block">
-      <ion-icon slot="start" name="checkmark"></ion-icon>
-      Salvar mudanças
-    </ion-button>
+    <app-item-form
+      [item]="initialItem"
+      (save)="handleSave($event)"
+    ></app-item-form>
   </ion-grid>
 </ion-content>
