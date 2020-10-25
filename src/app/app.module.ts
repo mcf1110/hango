@@ -16,9 +16,10 @@ import { ItemsPage } from './pages/items/items.page';
 import { AddItemPage } from './pages/add-item/add-item.page';
 import { ItemFormComponent } from './components/item-form/item-form.component';
 import { EditItemPage } from './pages/edit-item/edit-item.page';
+import { ReportPage } from './pages/report/report.page';
 
 @NgModule({
-  declarations: [AppComponent, HomePage, PeoplePage, ItemsPage, AddItemPage, EditItemPage, ItemFormComponent],
+  declarations: [AppComponent, HomePage, PeoplePage, ItemsPage, AddItemPage, EditItemPage, ReportPage, ItemFormComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule,
     IonicStorageModule.forRoot()],
