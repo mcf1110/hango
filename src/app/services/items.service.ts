@@ -50,10 +50,6 @@ export class ItemsService {
     return true;
   }
 
-  getIndex(id) {
-    // return this.all().binarySearch(id);
-  }
-
   find(id: number): Observable<Item | null> {
     return this.innerAll$.pipe(
       map(all => {
