@@ -51,15 +51,6 @@ export class PeopleService {
     return true;
   }
 
-  getIndex(id) {
-    // return this.all().binarySearch(id);
-  }
-
-  get(id) {
-    // var index = this.getIndex(id);
-    // return index >= 0 ? this.all()[index] : {};
-  }
-
   update(id: number, name: string) {
     const people = this.all();
     const newPeople = people.filter(p => p.id !== id);
@@ -68,11 +59,12 @@ export class PeopleService {
   }
 
   remove(id: number) {
-    // if (Items.findPerson(id)) {
-    //   return false;
-    // }
     const people = this.all();
     this.commit(people.filter(p => p.id !== id));
     return true;
+  }
+
+  wipe() {
+    this.commit([]);
   }
 }

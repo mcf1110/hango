@@ -71,4 +71,8 @@ export class ItemsService {
     this.commit(items.filter(p => p.id !== id));
     return true;
   }
+
+  wipe() {
+    this.commit([]);
+  }
 }
