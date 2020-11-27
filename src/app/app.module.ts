@@ -18,6 +18,8 @@ import { ItemFormComponent } from './components/item-form/item-form.component';
 import { EditItemPage } from './pages/edit-item/edit-item.page';
 import { ReportPage } from './pages/report/report.page';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ReportDetailsComponent } from './components/report-details/report-detai
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule,
-    IonicStorageModule.forRoot()],
+    IonicStorageModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
     StatusBar,
     SplashScreen,
