@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Detalhes de {{person.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list color="light">
+    <ion-item>
+      <ion-col><strong>Item</strong></ion-col>
+      <ion-col>
+        <strong>Total / Pessoas</strong>
+      </ion-col>
+      <ion-col>
+        <strong>{{person.name}} paga</strong>
+      </ion-col>
+    </ion-item>
+    <ion-item *ngFor="let item of person.items">
+      <ion-col><strong>{{item.name}}</strong></ion-col>
+      <ion-col>
+        {{item.value | currency:'BRL'}} / {{item.people.length}}
+      </ion-col>
+      <ion-col>
+        {{item.individualValue | currency:'BRL'}}
+      </ion-col>
+    </ion-item>
+  </ion-list>
+</ion-content>

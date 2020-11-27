@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Report, ReportService } from 'src/app/services/report.service';
+import { ModalController } from '@ionic/angular';
+import { ReportDetailsComponent } from 'src/app/components/report-details/report-details.component';
+import { PersonWithIndividualValue, Report, ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-report',
@@ -9,12 +11,19 @@ import { Report, ReportService } from 'src/app/services/report.service';
 export class ReportPage {
   constructor(
     private reportService: ReportService,
+    private modalController: ModalController
   ) { }
 
   public report$ = this.reportService.report$;
 
-  public openInfo(r: Report) {
-    console.log(r);
+  public async openInfo(p: PersonWithIndividualValue) {
+    const modal = await this.modalController.create({
+      component: ReportDetailsComponent,
+      componentProps: {
+        person: p
+      }
+    })
+    modal.present();
   }
 
 }

@@ -15,8 +15,8 @@ interface Summary {
   totalWithTip: number;
 }
 
-interface PersonWithIndividualValue extends Person {
-  items: (Item & { individualValue: number })[]
+export interface PersonWithIndividualValue extends Person {
+  items: (Item & { individualValue: number })[];
 }
 
 export interface Report {

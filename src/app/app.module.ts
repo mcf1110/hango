@@ -17,9 +17,20 @@ import { AddItemPage } from './pages/add-item/add-item.page';
 import { ItemFormComponent } from './components/item-form/item-form.component';
 import { EditItemPage } from './pages/edit-item/edit-item.page';
 import { ReportPage } from './pages/report/report.page';
+import { ReportDetailsComponent } from './components/report-details/report-details.component';
 
 @NgModule({
-  declarations: [AppComponent, HomePage, PeoplePage, ItemsPage, AddItemPage, EditItemPage, ReportPage, ItemFormComponent],
+  declarations: [
+    AppComponent,
+    HomePage,
+    PeoplePage,
+    ItemsPage,
+    AddItemPage,
+    EditItemPage,
+    ReportPage,
+    ItemFormComponent,
+    ReportDetailsComponent
+  ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule,
     IonicStorageModule.forRoot()],
