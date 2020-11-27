@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { PeopleService, Person } from 'src/app/services/people.service';
+import { Component } from '@angular/core';
+import { Report, ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-report',
@@ -8,11 +7,14 @@ import { PeopleService, Person } from 'src/app/services/people.service';
   styleUrls: ['report.page.scss'],
 })
 export class ReportPage {
-
-  public people = this.peopleService.allAlphatically$;
   constructor(
-    private alertController: AlertController,
-    private peopleService: PeopleService,
+    private reportService: ReportService,
   ) { }
+
+  public report$ = this.reportService.report$;
+
+  public openInfo(r: Report) {
+    console.log(r);
+  }
 
 }

@@ -12,12 +12,14 @@
   </ion-fab>
   <ion-grid fixed>
     <ion-list>
-      <ion-item
-        button
-        (click)="showSheet(item)"
-        *ngFor="let item of items$ | async"
-      >
-        {{item.name}}
+      <ion-item button (click)="showSheet(item)" *ngFor="let item of items$ | async">
+        <ion-label>
+          <h2>
+            {{item.name}}
+          </h2>
+          <p>{{item.value | currency:'BRL'}} / {{item.people.length}} pessoas =
+            {{item.value / item.people.length | currency:'BRL'}}</p>
+        </ion-label>
       </ion-item>
     </ion-list>
   </ion-grid>

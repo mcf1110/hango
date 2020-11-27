@@ -6,12 +6,64 @@
 
 <ion-content>
   <ion-grid fixed>
-    <ion-list>
-      <ion-item
-        *ngFor="let person of people | async"
-      >
-        {{person.name}}
-      </ion-item>
-    </ion-list>
+    <ng-container *ngIf="report$ | async as report">
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-row class=" ion-align-items-center">
+            <ion-col size="auto">
+              <ion-card-title><strong>
+                  Total
+                </strong></ion-card-title>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="secondary">
+                <h1><strong>{{report.summary.total | currency:'BRL'}}</strong></h1>
+                <h3>Sem 10%</h3>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6">
+              <ion-text color="primary">
+                <h1><strong>{{report.summary.totalWithTip | currency:'BRL'}}</strong></h1>
+                <h3>Com 10%</h3>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngFor="let r of report.people" button (click)="openInfo(r)">
+        <ion-card-header>
+          <ion-row class=" ion-align-items-center">
+            <ion-col size="auto">
+              <ion-card-title><strong>
+                  {{r.name}}
+                </strong></ion-card-title>
+            </ion-col>
+            <ion-col>
+              <ion-badge class="ion-margin-start">{{r.items.length}} itens</ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="6">
+              <ion-text color="secondary">
+                <h1><strong>{{r.total | currency:'BRL'}}</strong></h1>
+                <h3>Sem 10%</h3>
+              </ion-text>
+            </ion-col>
+            <ion-col size="6">
+              <ion-text color="primary">
+                <h1><strong>{{r.totalWithTip | currency:'BRL'}}</strong></h1>
+                <h3>Com 10%</h3>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
   </ion-grid>
 </ion-content>
