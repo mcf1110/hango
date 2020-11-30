@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ItemsService } from './items.service';
 
 export interface Person {
   name: string;
@@ -13,7 +14,7 @@ export interface Person {
 })
 export class PeopleService {
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private items: ItemsService) {
     this.storage.get('People').then(x => x ?? []).then(p => this.innerAll$.next(p));
   }
 
@@ -59,6 +60,9 @@ export class PeopleService {
   }
 
   remove(id: number) {
+    if (this.items.hasPerson(id)) {
+      return false;
+    }
     const people = this.all();
     this.commit(people.filter(p => p.id !== id));
     return true;

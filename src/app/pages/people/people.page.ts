@@ -58,7 +58,7 @@ export class PeoplePage {
     if (!p) {
       const alert = await this.alertController.create({
         header: 'Ops!',
-        message: 'Parece que essa pessoa já tem pelo menos um item!',
+        message: 'Parece que essa pessoa tem pelo menos um item!',
         buttons: ['OK']
       });
 

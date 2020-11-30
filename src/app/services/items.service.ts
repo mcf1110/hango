@@ -75,4 +75,8 @@ export class ItemsService {
   wipe() {
     this.commit([]);
   }
+
+  hasPerson(personId: number) {
+    return this.all().find(i => i.people.includes(personId)) !== undefined;
+  }
 }
