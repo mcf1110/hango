@@ -9,15 +9,9 @@ import { PeopleService } from 'src/app/services/people.service';
   templateUrl: './item-form.component.html',
   styleUrls: ['./item-form.component.scss'],
 })
-export class ItemFormComponent {
+export class ItemFormComponent implements OnInit {
   @Output() save = new EventEmitter<Item>();
   @Input() item: Item;
-
-  ngOnInit() {
-    if (this.item.people) {
-      this.selectedPeople = new Set(this.item.people);
-    }
-  }
 
   private search$ = new BehaviorSubject('');
   private debouncedSearch$ = this.search$.pipe(
@@ -37,6 +31,12 @@ export class ItemFormComponent {
   public selectedPeople: Set<number> = new Set();
 
   constructor(private peopleService: PeopleService) { }
+
+  ngOnInit() {
+    if (this.item.people) {
+      this.selectedPeople = new Set(this.item.people);
+    }
+  }
 
   public searchChanged(search: string) {
     this.search$.next(search);

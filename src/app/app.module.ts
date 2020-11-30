@@ -20,6 +20,7 @@ import { ReportPage } from './pages/report/report.page';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { FormErrorComponent } from './components/form-error/form-error.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +32,15 @@ import { environment } from '../environments/environment';
     EditItemPage,
     ReportPage,
     ItemFormComponent,
-    ReportDetailsComponent
+    ReportDetailsComponent,
+    FormErrorComponent
   ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule,
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    FormsModule,
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
