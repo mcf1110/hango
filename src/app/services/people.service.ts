@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { ItemsService } from './items.service';
 
 export interface Person {
@@ -47,7 +49,7 @@ export class PeopleService {
       id: people.length > 0 ? Math.max(...people.map(p => p.id)) + 1 : 1,
       name
     };
-    const newPeople = [person, ...people]
+    const newPeople = [person, ...people];
     this.commit(newPeople);
     return true;
   }

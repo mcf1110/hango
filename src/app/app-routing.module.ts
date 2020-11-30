@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HomePage } from './pages/home/home.page';
-import { PeoplePage } from './pages/people/people.page';
-import { ItemsPage } from './pages/items/items.page';
+
 import { AddItemPage } from './pages/add-item/add-item.page';
 import { EditItemPage } from './pages/edit-item/edit-item.page';
+import { HomePage } from './pages/home/home.page';
+import { ItemsPage } from './pages/items/items.page';
+import { PeoplePage } from './pages/people/people.page';
 import { ReportPage } from './pages/report/report.page';
 
 const routes: Routes = [

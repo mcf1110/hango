@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+
 import { ReportDetailsComponent } from 'src/app/components/report-details/report-details.component';
 import { PersonWithIndividualValue, Report, ReportService } from 'src/app/services/report.service';
 
@@ -22,7 +23,7 @@ export class ReportPage {
       componentProps: {
         person: p
       }
-    })
+    });
     modal.present();
   }
 

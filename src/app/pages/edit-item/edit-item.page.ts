@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+
 import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { Item, ItemsService } from 'src/app/services/items.service';
 
@@ -18,7 +19,7 @@ export class EditItemPage {
     distinctUntilChanged(),
     filter(id => id > 0),
     switchMap(id => this.itemsService.find(id)),
-  )
+  );
 
   public handleSave(newItem: Item) {
     this.itemsService.update(Number(this.route.snapshot.paramMap.get('id')), newItem);

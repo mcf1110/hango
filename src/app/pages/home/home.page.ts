@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+
 import { ItemsService } from 'src/app/services/items.service';
 import { PeopleService } from 'src/app/services/people.service';
 

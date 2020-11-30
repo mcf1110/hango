@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+
 import { Item, ItemsService } from 'src/app/services/items.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class AddItemPage {
     name: '',
     value: 0,
     id: 0
-  }
+  };
 
   public handleSave(newItem: Item) {
     this.itemsService.add(newItem);

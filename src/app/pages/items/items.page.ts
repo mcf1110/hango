@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
-import { ItemsService, Item } from 'src/app/services/items.service';
+
+import { Item, ItemsService } from 'src/app/services/items.service';
 
 @Component({
   selector: 'app-items',
@@ -27,7 +28,7 @@ export class ItemsPage {
     this.itemsService.add(i);
   }
   public removeItem(id: number) {
-    this.itemsService.remove(id)
+    this.itemsService.remove(id);
   }
   public async showSheet(item: Item) {
     const actionSheet = await this.actionSheetController.create({

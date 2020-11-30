@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
+
 import { PeopleService, Person } from 'src/app/services/people.service';
 
 @Component({
@@ -51,7 +52,7 @@ export class PeoplePage {
 
     await alert.present();
     const { data } = await alert.onDidDismiss();
-    this.peopleService.update(person.id, data.values.name)
+    this.peopleService.update(person.id, data.values.name);
   }
   async removePerson(id: number) {
     const p = this.peopleService.remove(id);

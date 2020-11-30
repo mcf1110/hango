@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { PersonWithIndividualValue } from '../../services/report.service'
+
+import { PersonWithIndividualValue } from '../../services/report.service';
 
 @Component({
   selector: 'app-report-details',
